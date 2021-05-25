@@ -1,10 +1,13 @@
 import * as React from "react";
 
-import Seo from "../components/seo";
+import Seo from "@/components/seo";
 
 const IndexPage: React.FC = (): React.ReactElement => (
   <React.Fragment>
-    <Seo title="Home" />
+    <Seo
+      title="BasicUI"
+      description="Commonly used react components with full customisable power."
+    />
     <h1>Hi people</h1>
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>
