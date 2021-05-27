@@ -12,7 +12,10 @@ import { useStaticQuery, graphql } from "gatsby";
 type SeoProps = {
   description?: string;
   lang?: string;
-  meta?: Array<any>;
+  meta?: ConcatArray<
+    | { name: string; content: any; property?: undefined }
+    | { property: string; content: any; name?: undefined }
+  >;
   title: string;
 };
 
@@ -37,7 +40,7 @@ const Seo: React.FC<SeoProps> = ({
   );
 
   const metaDescription = description || site.siteMetadata.description;
-  const defaultTitle = site.siteMetadata?.title;
+  const defaultTitle = site.siteMetadata?.title || title;
 
   return (
     <Helmet
@@ -45,7 +48,7 @@ const Seo: React.FC<SeoProps> = ({
         lang,
       }}
       title={title}
-      titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : null}
+      titleTemplate={defaultTitle ? `%s | ${defaultTitle}` : undefined}
       meta={[
         {
           name: `description`,
