@@ -1,3 +1,12 @@
 .header {
-  background-color: bisque;
+  background-color: rgba(0, 0, 0.5, 0.025);
+  padding: 1rem;
+}
+
+.logo {
+  color: var(--primaryBlack);
+  text-decoration: none;
+  font-size: 2rem;
+  font-weight: 600;
+  font-family: "Quicksand", sans-serif;
 }
