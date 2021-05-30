@@ -12,9 +12,6 @@ const IndexPage: React.FC = (): React.ReactElement => (
       description="Commonly used react components with full customisable power."
     />
     <Layout>
-      <h1>Hi people</h1>
-      <p>Welcome to your new Gatsby site.</p>
-      <p>Now go build something great.</p>
     </Layout>
   </React.Fragment>
 );

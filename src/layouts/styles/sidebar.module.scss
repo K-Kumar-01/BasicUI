@@ -1,0 +1,35 @@
+.sidebar {
+  background: var(--lightGrey);
+  height: calc(100vh - 72px);
+  position: fixed;
+  top: 72px;
+  left: 0;
+  width: 20rem;
+  padding: 1rem;
+  transition: var(--mainTransition);
+  outline: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.toggler {
+  position: fixed;
+  z-index: 10;
+  height: 3rem;
+  width: 3rem;
+  font-size: 1.5rem;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  transition: var(--mainTransition);
+}
+
+.closeBtn {
+  // position: relative;
+  // left: 40%;
+  outline: none;
+  border: none;
+  background: transparent;
+  font-size: 2rem;
+  cursor: pointer;
+}
