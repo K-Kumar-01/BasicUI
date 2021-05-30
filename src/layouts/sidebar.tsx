@@ -4,28 +4,40 @@ import * as SidebarStyles from "./styles/sidebar.module.scss";
 
 type SidebarProps = {
   children?: React.ReactNode;
+  defaultOpen?: boolean;
 };
 
-const Sidebar: React.FC<SidebarProps> = (): React.ReactElement => {
-  const [open, setOpen] = useState<boolean>(true);
+const Sidebar: React.FC<SidebarProps> = ({
+  children,
+  defaultOpen = true,
+}): React.ReactElement => {
+  const [open, setOpen] = useState<boolean>(defaultOpen);
   const [sidebarWidth, setSidebarWidth] = useState<string>("20rem");
-  const toggleRef = useRef<any>();
-  const sidebarRef = useRef<any>();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const sidebarRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (open) {
-      toggleRef.current.style.left = sidebarWidth;
-      sidebarRef.current.style.width = sidebarWidth;
-      sidebarRef.current.style.padding = "1rem";
+      if (toggleRef.current !== null) {
+        toggleRef.current.style.left = sidebarWidth;
+      }
+      if (sidebarRef.current !== null) {
+        sidebarRef.current.style.width = sidebarWidth;
+        sidebarRef.current.style.padding = "1rem";
+      }
     } else {
-      toggleRef.current.style.left = "0px";
-      sidebarRef.current.style.width = "0px";
-      sidebarRef.current.style.padding = "0px";
+      if (toggleRef.current !== null) {
+        toggleRef.current.style.left = "0px";
+      }
+      if (sidebarRef.current !== null) {
+        sidebarRef.current.style.width = "0px";
+        sidebarRef.current.style.padding = "0px";
+      }
     }
   }, [open, sidebarWidth]);
 
   useLayoutEffect(() => {
     const updateSidebarSize = () => {
-      if (window.innerWidth < 560) {
+      if (window.innerWidth <= 560) {
         setSidebarWidth("100%");
       } else {
         setSidebarWidth("20rem");
@@ -55,7 +67,7 @@ const Sidebar: React.FC<SidebarProps> = (): React.ReactElement => {
             </button>
           </div>
         )}
-        <div>Hello from Sidebar</div>
+        {children ? children : <div>Hello from Sidebar</div>}
       </section>
     </React.Fragment>
   );

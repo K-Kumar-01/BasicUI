@@ -10,6 +10,13 @@
   outline: none;
   overflow-x: hidden;
   overflow-y: auto;
+  box-shadow: 3px 5px 10px 0px rgb(0 0 0 / 17%);
+}
+
+@media (max-width: 560px) {
+  .sidebar {
+    box-shadow: none;
+  }
 }
 
 .toggler {
@@ -25,8 +32,6 @@
 }
 
 .closeBtn {
-  // position: relative;
-  // left: 40%;
   outline: none;
   border: none;
   background: transparent;
