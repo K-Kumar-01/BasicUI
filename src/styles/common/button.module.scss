@@ -4,22 +4,51 @@ $secondary: secondary #989898 darken(#989898, 10%);
 
 $types: $basic $primary $secondary;
 
+$xs: xs 0.75rem;
+$sm: sm 1.25rem;
+$md: md 1.5rem;
+$lg: lg 1.75rem;
+$xl: xl 2.25rem;
+
+$sizes: $xs $sm $md $lg $xl;
+
 .button {
   border-radius: 0.25rem;
   padding: 0.5rem 1.5rem;
-  font-size: 1.5rem;
   font-family: "Quicksand", sans-serif;
   cursor: pointer;
   transition: var(--mainTransition);
 }
 
 @each $type in $types {
-  .#{nth($type,1)} {
+  .#{nth($type,1)}.outlined {
     color: nth($type, 2);
     border: 1px solid nth($type, 2);
+    background: {
+      image: linear-gradient(45deg, nth($type, 2) 50%, transparent 50%);
+      position: 100%;
+      size: 400%;
+    }
   }
-  .#{nth($type,1)}:hover {
+  .#{nth($type,1)}.outlined:hover {
     color: white;
+    background-position: 0;
+  }
+  
+  .#{nth($type,1)}.fill {
+    color: white;
+    border: 1px solid nth($type, 2);
     background-color: nth($type, 2);
+  }
+  .#{nth($type,1)}.fill:hover {
+    color: white;
+    background-color: nth($type, 3);
+    border: 1px solid nth($type, 3);
+  }
+}
+
+@each $size in $sizes {
+  .#{nth($size,1)} {
+    font-size: nth($size, 2);
   }
 }
