@@ -6,9 +6,10 @@ type ButtonProps = {
   text?: string;
   className?: string;
   children?: React.ReactNode;
-  type?: "basic" | "primary" | "secondary";
+  type?: "basic" | "primary" | "secondary" | "success" | "danger" | "warning";
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   variant?: "outlined" | "fill";
+  disabled?: boolean;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -17,10 +18,16 @@ const Button: React.FC<ButtonProps> = ({
   type = "basic",
   size = "sm",
   variant = "outlined",
+  disabled = false,
 }): React.ReactElement => {
   return (
     <button
-      className={`${ButtonStyles.button} ${ButtonStyles[type]} ${ButtonStyles[variant]} ${ButtonStyles[size]} ${className}`}
+      className={`${ButtonStyles.button} ${ButtonStyles[type]} ${
+        ButtonStyles[variant]
+      } ${disabled ? ButtonStyles.disabled : ""} ${ButtonStyles[size]} ${
+        className ? className : ""
+      }`}
+      disabled={disabled}
     >
       {text}
     </button>

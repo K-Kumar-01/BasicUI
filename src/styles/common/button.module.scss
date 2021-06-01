@@ -1,8 +1,11 @@
 $basic: basic #8a52c2 darken(#8a52c2, 10%);
 $primary: primary #2196f3 darken(#2196f3, 10%);
 $secondary: secondary #989898 darken(#989898, 10%);
+$success: success #5cb85c darken(#5cb85c, 10%);
+$warning: warning #f0ad4e darken(#f0ad4e, 10%);
+$danger: danger #d9534f darken(#d9534f, 10%);
 
-$types: $basic $primary $secondary;
+$types: $basic $primary $secondary $success $warning $danger;
 
 $xs: xs 0.75rem;
 $sm: sm 1.25rem;
@@ -17,6 +20,7 @@ $sizes: $xs $sm $md $lg $xl;
   padding: 0.5rem 1.5rem;
   font-family: "Quicksand", sans-serif;
   cursor: pointer;
+  background: transparent;
   transition: var(--mainTransition);
 }
 
@@ -34,7 +38,7 @@ $sizes: $xs $sm $md $lg $xl;
     color: white;
     background-position: 0;
   }
-  
+
   .#{nth($type,1)}.fill {
     color: white;
     border: 1px solid nth($type, 2);
@@ -44,6 +48,31 @@ $sizes: $xs $sm $md $lg $xl;
     color: white;
     background-color: nth($type, 3);
     border: 1px solid nth($type, 3);
+  }
+
+  .#{nth($type,1)}.disabled {
+    cursor: default;
+    background-color: lighten(nth($type, 2), 20%);
+    color: white;
+    border: 1px solid lighten(nth($type, 2), 20%);
+  }
+
+  .#{nth($type,1)}.outlined.disabled:hover {
+    background: {
+      image: linear-gradient(
+        45deg,
+        lighten(nth($type, 2), 20%) 50%,
+        transparent 50%
+      );
+      position: 100%;
+      size: 400%;
+    }
+  }
+
+  .#{nth($type,1)}.fill.disabled:hover {
+    color: white;
+    background-color: lighten(nth($type, 2), 20%);
+    border: 1px solid lighten(nth($type, 2), 20%);
   }
 }
 
