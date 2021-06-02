@@ -24,6 +24,10 @@ $sizes: $xs $sm $md $lg $xl;
   transition: var(--mainTransition);
 }
 
+.button:focus {
+  outline: none;
+}
+
 @each $type in $types {
   .#{nth($type,1)}.outlined {
     color: nth($type, 2);

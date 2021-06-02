@@ -1,27 +1,30 @@
-import React from "react";
+import React, { HTMLAttributes } from "react";
 
 import * as ButtonStyles from "@/styles/common/button.module.scss";
 
-type ButtonProps = {
-  text?: string;
-  className?: string;
+interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode;
-  type?: "basic" | "primary" | "secondary" | "success" | "danger" | "warning";
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  variant?: "outlined" | "fill";
+  className?: string;
   disabled?: boolean;
-};
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  text?: string;
+  type?: "basic" | "primary" | "secondary" | "success" | "danger" | "warning";
+  variant?: "outlined" | "fill";
+}
 
 const Button: React.FC<ButtonProps> = ({
+  children,
   className,
+  disabled = false,
+  size = "sm",
   text = "I am a button",
   type = "basic",
-  size = "sm",
   variant = "outlined",
-  disabled = false,
+  ...props
 }): React.ReactElement => {
   return (
     <button
+      {...props}
       className={`${ButtonStyles.button} ${ButtonStyles[type]} ${
         ButtonStyles[variant]
       } ${disabled ? ButtonStyles.disabled : ""} ${ButtonStyles[size]} ${
@@ -29,7 +32,7 @@ const Button: React.FC<ButtonProps> = ({
       }`}
       disabled={disabled}
     >
-      {text}
+      {children || text}
     </button>
   );
 };
