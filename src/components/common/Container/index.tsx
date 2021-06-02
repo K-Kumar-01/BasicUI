@@ -1,18 +1,24 @@
-import React from "react";
+import React, { HTMLAttributes } from "react";
 
 import * as ContainerStyles from "@/styles/common/container.module.scss";
 
-type ContainerProps = {
+interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
-};
+}
 
 const Container: React.FC<ContainerProps> = ({
   children,
   className,
+  ...props
 }): React.ReactElement => {
   return (
-    <main className={className || ContainerStyles.container}>{children}</main>
+    <div
+      {...props}
+      className={`${ContainerStyles.container} ${className ? className : ""}`}
+    >
+      {children}
+    </div>
   );
 };
 
