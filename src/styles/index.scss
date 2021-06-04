@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500&display=swap");
 
 :root {
   --primaryBlack: #181818;
@@ -85,4 +85,19 @@ table {
 td,
 th {
   padding: 0;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.flex__center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

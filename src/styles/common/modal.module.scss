@@ -1,0 +1,46 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: white;
+  overflow-y: auto;
+  min-width: min(800px, 90vw);
+  max-width: 90vw;
+  min-height: min(600px, 95%);
+  max-height: 95vh;
+  font-family: "Quicksand", sans-serif;
+}
+
+.modal__header {
+  border-bottom: 1px solid var(--lightGrey);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close {
+  font-size: 3rem;
+  color: var(--darkGrey);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+
+.close:hover {
+  color: black;
+}
+
+.close:focus {
+  outline: none;
+}
+
+.modal__body {
+  flex-grow: 1;
+  padding: 1rem;
+}
+
+.modal__footer {
+  border-top: 1px solid var(--lightGrey);
+  padding: 1rem;
+}
