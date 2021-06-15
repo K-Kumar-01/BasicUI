@@ -1,16 +1,24 @@
-import React, { FC, ReactNode } from "react";
+import React, { HTMLAttributes, ReactNode } from "react";
 
 import * as BackdropStyles from "@/styles/common/backdrop.module.scss";
 
-interface BackdropProps {
+interface BackdropProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   className?: string;
 }
 
-const Backdrop: FC<BackdropProps> = ({ children, className = "" }) => {
-  return (
-    <div className={`${BackdropStyles.backdrop} ${className}`}>{children}</div>
-  );
-};
+const Backdrop = React.forwardRef<HTMLDivElement, BackdropProps>(
+  ({ children, className = "", ...props }, ref) => {
+    return (
+      <div
+        className={`${BackdropStyles.backdrop} ${className}`}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
 
 export default Backdrop;
