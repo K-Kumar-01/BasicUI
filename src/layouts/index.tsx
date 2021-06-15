@@ -3,7 +3,7 @@ import Header from "./header";
 import Sidebar from "./sidebar";
 
 type LayoutProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 const Layout: React.FC<LayoutProps> = ({ children }): React.ReactElement => {

@@ -11,8 +11,7 @@ const IndexPage: React.FC = (): React.ReactElement => (
       title="BasicUI"
       description="Commonly used react components with full customisable power."
     />
-    <Layout>
-    </Layout>
+    <Layout />
   </React.Fragment>
 );
 
