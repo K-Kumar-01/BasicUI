@@ -4,10 +4,14 @@ import React, {
   HTMLAttributes,
   ReactNode,
   useRef,
+  Fragment,
+  useCallback,
   useEffect,
+  MouseEvent,
 } from "react";
 
 import * as ModalStyles from "@/styles/common/modal.module.scss";
+import Backdrop from "../Backdrop";
 
 interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
@@ -17,49 +21,65 @@ interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   footer?: ReactNode;
   footerClassName?: string;
   show: boolean;
-  onClick: () => void;
+  closeModal: () => void;
 }
 
 const Modal: FC<ModalProps> = ({
   children,
   className = "",
-  header = "This area is for Modal Header",
+  header = null,
   headerClassName = "",
-  footer = "This area is for footer",
-  footerClassName,
+  footer = null,
+  footerClassName = "",
   show,
-  onClick,
+  closeModal,
   ...props
 }): ReactElement => {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (show) {
-      if (modalRef.current) {
-        modalRef.current.style.display = "flex";
-      }
-    } else {
-      if (modalRef.current) {
-        modalRef.current.style.display = "none";
-      }
+  const handleBackDropClick = (e: MouseEvent) => {
+    if (modalRef.current === e.target) {
+      closeModal();
     }
-  }, [show]);
+  };
+
+  const keyPress = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape" && show) {
+        closeModal();
+      }
+    },
+    [closeModal, show]
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", keyPress);
+    return () => document.removeEventListener("keydown", keyPress);
+  }, [keyPress]);
 
   return (
-    <div className={`backdrop flex__center`} ref={modalRef}>
-      <div className={`${ModalStyles.modal} ${className}`} {...props}>
-        <div className={`${ModalStyles.modal__header} ${headerClassName}`}>
-          <div>{header}</div>
-          <button className={ModalStyles.close} onClick={onClick}>
-            &times;
-          </button>
-        </div>
-        <div className={ModalStyles.modal__body}>{children}</div>
-        <div className={`${ModalStyles.modal__footer} ${footerClassName}`}>
-          {footer}
-        </div>
-      </div>
-    </div>
+    <Fragment>
+      {show ? (
+        <Backdrop onClick={handleBackDropClick} ref={modalRef}>
+          <div className={`${ModalStyles.modal} ${className}`} {...props}>
+            <div className={`${ModalStyles.modal__header} ${headerClassName}`}>
+              {header && <div>{header}</div>}
+              <button className={ModalStyles.close} onClick={closeModal}>
+                &times;
+              </button>
+            </div>
+            <div className={ModalStyles.modal__body}>{children}</div>
+            {footer && (
+              <div
+                className={`${ModalStyles.modal__footer} ${footerClassName}`}
+              >
+                {footer}
+              </div>
+            )}
+          </div>
+        </Backdrop>
+      ) : null}
+    </Fragment>
   );
 };
 

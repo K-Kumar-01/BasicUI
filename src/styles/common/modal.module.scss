@@ -9,6 +9,7 @@
   min-height: min(600px, 95%);
   max-height: 95vh;
   font-family: "Quicksand", sans-serif;
+  border-radius: 0.25rem;
 }
 
 .modal__header {
@@ -17,6 +18,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  button {
+    flex-basis: 4rem;
+  }
 }
 
 .close {
@@ -25,14 +30,14 @@
   cursor: pointer;
   background: transparent;
   border: none;
-}
 
-.close:hover {
-  color: black;
-}
+  &:hover {
+    color: black;
+  }
 
-.close:focus {
-  outline: none;
+  &:focus {
+    outline: none;
+  }
 }
 
 .modal__body {
