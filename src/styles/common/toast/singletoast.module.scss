@@ -44,39 +44,6 @@ $sizes: $xs $sm $md $lg $xl;
   }
 }
 
-.notificationContainer {
-  box-sizing: border-box;
-  position: fixed;
-}
-
-.topRight {
-  top: 0.75rem;
-  right: 0.75rem;
-  transition: transform 0.6s ease-in-out;
-  animation: toast-in-right 0.5s;
-}
-
-.bottomRight {
-  bottom: 0.75rem;
-  right: 0.75rem;
-  transition: transform 0.6s ease-in-out;
-  animation: toast-in-right 0.5s;
-}
-
-.topLeft {
-  top: 0.75rem;
-  left: 0.75rem;
-  transition: transform 0.6s ease-in;
-  animation: toast-in-left 0.5s;
-}
-
-.bottomLeft {
-  bottom: 0.75rem;
-  left: 0.75rem;
-  transition: transform 0.6s ease-in;
-  animation: toast-in-left 0.5s;
-}
-
 .toast {
   display: flex;
   align-items: center;
@@ -93,22 +60,4 @@ $sizes: $xs $sm $md $lg $xl;
 .notificationDetails {
   flex-grow: 1;
   padding: 0.25rem 0.5rem;
-}
-
-@keyframes toast-in-right {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes toast-in-left {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
 }
