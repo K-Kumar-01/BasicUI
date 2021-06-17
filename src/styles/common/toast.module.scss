@@ -27,17 +27,19 @@ $sizes: $xs $sm $md $lg $xl;
 @each $type in $types {
   .#{nth($type,1)} {
     color: nth($type, 2);
-    background-color: lighten(nth($type, 2), 40%);
+    background-color: lighten(nth($type, 2), 35%);
     border-radius: 0.25rem;
     button {
-      color: nth($type, 2);
       border: none;
-      border-right: 1px solid nth($type, 2);
-      align-self: stretch;
-      padding: 0.5rem;
+      color: darken(nth($type, 2), 10%);
     }
-    div {
-      padding: 0.5rem 1rem;
+    .notificationIcon {
+      padding: 0.5rem;
+      background: darken(nth($type, 2), 10%);
+      align-self: stretch;
+      color: lighten(nth($type, 2), 30%);
+      border-bottom-left-radius: 0.25rem;
+      border-top-left-radius: 0.25rem;
     }
   }
 }
@@ -79,12 +81,18 @@ $sizes: $xs $sm $md $lg $xl;
   display: flex;
   align-items: center;
   margin-bottom: 0.5rem;
+  width: 25rem;
 
   button {
     background: transparent;
     outline: none;
     cursor: pointer;
   }
+}
+
+.notificationDetails {
+  flex-grow: 1;
+  padding: 0.25rem 0.5rem;
 }
 
 @keyframes toast-in-right {
