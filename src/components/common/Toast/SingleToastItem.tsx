@@ -12,14 +12,20 @@ import { ToastItem } from "./types";
 
 import * as ToastItemStyles from "@/styles/common/toast/singletoast.module.scss";
 
+interface ToastItemProps extends ToastItem {
+  deleteToast: (id: number | string) => void;
+}
+
 const SingleToastItem = memo(
   ({
+    id,
     title,
     message,
     type = "basic",
     toastClassName = "",
     size = "sm",
-  }: ToastItem) => {
+    deleteToast,
+  }: ToastItemProps) => {
     const getIcon = (type: string): ReactElement => {
       switch (type) {
         case "primary":
@@ -47,7 +53,7 @@ const SingleToastItem = memo(
           <p className={ToastItemStyles.notificationTitle}>{title}</p>
           <p className={ToastItemStyles.notificationMessage}>{message}</p>
         </div>
-        <button>
+        <button onClick={() => deleteToast(id)}>
           <CloseIcon />
         </button>
       </div>

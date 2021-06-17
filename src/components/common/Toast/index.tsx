@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from "react";
+import React, { HTMLAttributes, useCallback, useState } from "react";
 import SingleToast from "./SingleToastItem";
 import { ToastItem } from "./types";
 
@@ -14,12 +14,23 @@ const Toast: React.FC<ToastProps> = ({
   position = "topRight",
   toastList = [],
 }): React.ReactElement => {
+  const [list, setList] = useState<ToastItem[]>(toastList);
+
+  const deleteToast = useCallback(
+    (id: number | string) => {
+      let allToast = [...list];
+      allToast = allToast.filter(toast => toast.id !== id);
+      setList(allToast);
+    },
+    [list]
+  );
+
   return (
     <div
       className={`${ToastStyles.notificationContainer} ${ToastStyles[position]}`}
     >
-      {toastList.map(el => (
-        <SingleToast key={el.id} {...el} />
+      {list.map(el => (
+        <SingleToast key={el.id} {...el} deleteToast={deleteToast} />
       ))}
     </div>
   );
