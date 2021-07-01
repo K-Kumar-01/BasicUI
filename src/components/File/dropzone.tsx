@@ -6,6 +6,8 @@ interface DropzoneProps extends HTMLAttributes<HTMLDivElement> {
   multiple?: boolean;
   maxLength?: number;
   fileTypes?: string[];
+  maxSize?: number;
+  sizeUnit?: "Bytes" | "KB" | "MB" | "GB" | "TB";
 }
 
 const Dropzone: React.FC<DropzoneProps> = ({
@@ -13,6 +15,8 @@ const Dropzone: React.FC<DropzoneProps> = ({
   multiple = false,
   maxLength = 10,
   fileTypes = ["file/*"],
+  maxSize = 1024,
+  sizeUnit = "KB",
 }): React.ReactElement => {
   const dragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -28,6 +32,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
   const fileDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const droppedFiles = e.dataTransfer.files;
+    console.log(droppedFiles);
     validateFiles(droppedFiles);
   };
 
@@ -81,7 +86,19 @@ const Dropzone: React.FC<DropzoneProps> = ({
     return valid;
   };
 
+  const checkFileSize = (file: File) => {
+    const availableSizes = ["BYTES", "KB", "MB", "GB", "TB"];
+    let index = availableSizes.lastIndexOf(sizeUnit.toUpperCase());
+    if (index === -1) {
+      console.info("Size Unit given wrong. Defaulting back to KB");
+      index = 1;
+    }
+    const allowedSize = maxSize * Math.pow(1024, index);
+    return file.size <= allowedSize;
+  };
+
   const validateFiles = (files: FileList) => {
+    checkFileSize(files[0]);
     checkFileLength(files) && checkFileTypes(files);
   };
 
