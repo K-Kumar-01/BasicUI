@@ -32,7 +32,6 @@ const Dropzone: React.FC<DropzoneProps> = ({
   const fileDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const droppedFiles = e.dataTransfer.files;
-    console.log(droppedFiles);
     validateFiles(droppedFiles);
   };
 
@@ -66,23 +65,21 @@ const Dropzone: React.FC<DropzoneProps> = ({
     return fileTypeRecord;
   };
 
-  const checkFileTypes = (files: FileList): boolean => {
-    const fileTypeRecord = generateFileTypeRecord(fileTypes);
+  const checkFileType = (
+    file: File,
+    fileTypeRecord: Record<string, string[]>
+  ): boolean => {
+    const [type, extension] = file.type.split("/");
     let valid = true;
-    for (const file of files) {
-      const [type, extension] = file.type.split("/");
-      if (
-        !(
-          "file" in fileTypeRecord ||
-          fileTypeRecord[type].includes("*") ||
-          fileTypeRecord[type].includes(extension)
-        )
-      ) {
-        valid = false;
-        break;
-      }
+    if (
+      !(
+        "file" in fileTypeRecord ||
+        fileTypeRecord[type].includes("*") ||
+        fileTypeRecord[type].includes(extension)
+      )
+    ) {
+      valid = false;
     }
-    !valid && alert("Files uplaoded do not match the fileTypes given");
     return valid;
   };
 
@@ -98,8 +95,20 @@ const Dropzone: React.FC<DropzoneProps> = ({
   };
 
   const validateFiles = (files: FileList) => {
-    checkFileSize(files[0]);
-    checkFileLength(files) && checkFileTypes(files);
+    checkFileLength(files);
+    const fileTypeRecord = generateFileTypeRecord(fileTypes);
+    let valid = true;
+    for (const file of files) {
+      const validFile =
+        checkFileSize(file) && checkFileType(file, fileTypeRecord);
+      if (!validFile) {
+        valid = false;
+        break;
+      }
+    }
+    if (!valid) {
+      alert("Files not compatible according to given dimenstions");
+    }
   };
 
   return (
