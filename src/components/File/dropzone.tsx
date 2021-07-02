@@ -171,7 +171,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
       <div className={DropzoneStyles.fileUploadContainer}>
         {selectedFiles.map(({ file, errors, id }) => (
           <UploadedFile
-            key={file.name + Math.floor(Math.random() * Math.pow(10, 9))}
+            key={id}
             name={file.name}
             id={id}
             onRemove={removeFile}
