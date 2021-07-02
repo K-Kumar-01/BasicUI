@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  align-items: center;
+
+  div:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+}
+
+.fileName {
+  max-width: 12.5rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--primaryBlack);
+}
+
+.success {
+  color: #5cb85c;
+}
+
+.error {
+  color: #d9534f;
+  font-weight: 600;
+}

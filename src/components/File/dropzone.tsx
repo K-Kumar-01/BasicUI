@@ -1,4 +1,5 @@
-import React, { HTMLAttributes, DragEvent } from "react";
+import React, { HTMLAttributes, DragEvent, useState } from "react";
+import UploadedFile from "./uploadedFile";
 
 import * as DropzoneStyles from "@/styles/file/dropzone.module.scss";
 
@@ -18,6 +19,10 @@ const Dropzone: React.FC<DropzoneProps> = ({
   maxSize = 1024,
   sizeUnit = "KB",
 }): React.ReactElement => {
+  const [selectedFiles, setSelectedFiles] = useState<
+    Array<{ file: File; errors: string }>
+  >([]);
+
   const dragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
@@ -83,6 +88,18 @@ const Dropzone: React.FC<DropzoneProps> = ({
     return valid;
   };
 
+  const convertSize = (size: number, to: string): string => {
+    const availableSizes = ["BYTES", "KB", "MB", "GB", "TB"];
+    let index = availableSizes.lastIndexOf(sizeUnit.toUpperCase());
+    if (index === -1) {
+      console.info("Size Unit given wrong. Defaulting back to KB");
+      index = 1;
+    }
+    const convertedSize =
+      (size / Math.pow(1024, index)).toFixed(3).toString() + ` ${to}`;
+    return convertedSize;
+  };
+
   const checkFileSize = (file: File) => {
     const availableSizes = ["BYTES", "KB", "MB", "GB", "TB"];
     let index = availableSizes.lastIndexOf(sizeUnit.toUpperCase());
@@ -97,18 +114,16 @@ const Dropzone: React.FC<DropzoneProps> = ({
   const validateFiles = (files: FileList) => {
     checkFileLength(files);
     const fileTypeRecord = generateFileTypeRecord(fileTypes);
-    let valid = true;
+    let filesValidated: Array<{ file: File; errors: string }> = [];
     for (const file of files) {
-      const validFile =
-        checkFileSize(file) && checkFileType(file, fileTypeRecord);
-      if (!validFile) {
-        valid = false;
-        break;
-      }
+      let errors = "";
+      const sizeResult = checkFileSize(file);
+      !sizeResult && (errors += "Size limit exceed");
+      const typeResult = checkFileType(file, fileTypeRecord);
+      !typeResult && (errors += ", Invalid Type");
+      filesValidated = [...filesValidated, { file, errors }];
     }
-    if (!valid) {
-      alert("Files not compatible according to given dimenstions");
-    }
+    setSelectedFiles(filesValidated);
   };
 
   return (
@@ -141,6 +156,16 @@ const Dropzone: React.FC<DropzoneProps> = ({
           </g>
         </svg>
         Drag &amp; Drop files here or click to upload
+      </div>
+      <div className={DropzoneStyles.fileUploadContainer}>
+        {selectedFiles.map(({ file, errors }) => (
+          <UploadedFile
+            key={file.name + Math.floor(Math.random() * Math.pow(10, 9))}
+            name={file.name}
+            size={convertSize(file.size, sizeUnit)}
+            errors={errors}
+          />
+        ))}
       </div>
     </div>
   );
