@@ -33,6 +33,13 @@
   font-weight: 600;
 }
 
+.remove {
+  font-size: 2rem;
+  color: darken(#d9534f, 10%);
+  cursor: pointer;
+  margin-left: auto;
+}
+
 @media (max-width: 560px) {
   .fileName {
     width: 10rem;

@@ -6,17 +6,23 @@ interface UploadedFileProps extends HTMLAttributes<HTMLDivElement> {
   errors?: string;
   name: string;
   size: string;
+  id: string;
+  onRemove: (id: string) => void;
 }
 
 const UploadedFile: React.FC<UploadedFileProps> = ({
   className,
   errors = "",
   name,
+  id,
   size,
+  onRemove,
 }): React.ReactElement => {
   return (
     <div
-      className={`${UploadedFileStyles.container}${className ? className : ""}`}
+      className={`${UploadedFileStyles.container} ${
+        className ? className : ""
+      }`}
     >
       <div className={UploadedFileStyles.fileName} title={name}>
         {name}
@@ -27,10 +33,17 @@ const UploadedFile: React.FC<UploadedFileProps> = ({
       {!errors ? (
         <div className={UploadedFileStyles.success}>Acceptable</div>
       ) : (
-        <div className={UploadedFileStyles.error}>
+        <div className={UploadedFileStyles.error} title={errors}>
           File not supported: {errors}
         </div>
       )}
+      <div
+        className={UploadedFileStyles.remove}
+        title={"Remove file"}
+        onClick={() => onRemove(id)}
+      >
+        &times;
+      </div>
     </div>
   );
 };
