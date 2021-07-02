@@ -20,7 +20,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
   sizeUnit = "KB",
 }): React.ReactElement => {
   const [selectedFiles, setSelectedFiles] = useState<
-    Array<{ file: File; errors: string }>
+    Array<{ file: File; errors: string; id: string }>
   >([]);
 
   const dragOver = (e: DragEvent<HTMLDivElement>) => {
@@ -111,19 +111,30 @@ const Dropzone: React.FC<DropzoneProps> = ({
     return file.size <= allowedSize;
   };
 
+  const generateId = (): string =>
+    Math.floor(Math.random() * Math.pow(10, 9)).toString() +
+    new Date().toString();
+
   const validateFiles = (files: FileList) => {
     checkFileLength(files);
     const fileTypeRecord = generateFileTypeRecord(fileTypes);
-    let filesValidated: Array<{ file: File; errors: string }> = [];
+    let filesValidated: Array<{ file: File; errors: string; id: string }> = [];
     for (const file of files) {
       let errors = "";
       const sizeResult = checkFileSize(file);
       !sizeResult && (errors += "Size limit exceed");
       const typeResult = checkFileType(file, fileTypeRecord);
       !typeResult && (errors += ", Invalid Type");
-      filesValidated = [...filesValidated, { file, errors }];
+      filesValidated = [...filesValidated, { file, errors, id: generateId() }];
     }
     setSelectedFiles([...selectedFiles, ...filesValidated]);
+  };
+
+  const removeFile = (filterId: string) => {
+    const allSelectedFiles = [...selectedFiles].filter(
+      ({ id }) => id != filterId
+    );
+    setSelectedFiles(allSelectedFiles);
   };
 
   return (
@@ -158,10 +169,12 @@ const Dropzone: React.FC<DropzoneProps> = ({
         Drag &amp; Drop files here or click to upload
       </div>
       <div className={DropzoneStyles.fileUploadContainer}>
-        {selectedFiles.map(({ file, errors }) => (
+        {selectedFiles.map(({ file, errors, id }) => (
           <UploadedFile
             key={file.name + Math.floor(Math.random() * Math.pow(10, 9))}
             name={file.name}
+            id={id}
+            onRemove={removeFile}
             size={convertSize(file.size, sizeUnit)}
             errors={errors}
           />
