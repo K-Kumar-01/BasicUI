@@ -1,7 +1,6 @@
 import React, { HTMLAttributes, memo } from "react";
 
 import * as UploadedFileStyles from "@/styles/file/uploadedFile.module.scss";
-import { useEffect } from "react";
 
 interface UploadedFileProps extends HTMLAttributes<HTMLDivElement> {
   errors?: string;
@@ -18,11 +17,8 @@ const UploadedFile = memo(
     name,
     id,
     size,
+    onRemove,
   }: UploadedFileProps): React.ReactElement => {
-    useEffect(() => {
-      console.log(id);
-    }, []);
-
     return (
       <div
         className={`${UploadedFileStyles.container} ${
@@ -42,7 +38,11 @@ const UploadedFile = memo(
             File not supported: {errors}
           </div>
         )}
-        <div className={UploadedFileStyles.remove} title={"Remove file"}>
+        <div
+          className={UploadedFileStyles.remove}
+          title={"Remove file"}
+          onClick={() => onRemove(id)}
+        >
           &times;
         </div>
       </div>
