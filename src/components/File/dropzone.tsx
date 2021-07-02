@@ -123,7 +123,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
       !typeResult && (errors += ", Invalid Type");
       filesValidated = [...filesValidated, { file, errors }];
     }
-    setSelectedFiles(filesValidated);
+    setSelectedFiles([...selectedFiles, ...filesValidated]);
   };
 
   return (
