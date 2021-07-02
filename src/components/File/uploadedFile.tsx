@@ -21,7 +21,9 @@ const UploadedFile: React.FC<UploadedFileProps> = ({
       <div className={UploadedFileStyles.fileName} title={name}>
         {name}
       </div>
-      <div className={UploadedFileStyles.fileSize}>({size})</div>
+      <div className={UploadedFileStyles.fileSize} title={size}>
+        ({size})
+      </div>
       {!errors ? (
         <div className={UploadedFileStyles.success}>Acceptable</div>
       ) : (

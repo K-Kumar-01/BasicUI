@@ -8,13 +8,20 @@
 }
 
 .fileName {
-  max-width: 12.5rem;
+  width: 12.5rem;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   font-size: 1.2rem;
   font-weight: 500;
   color: var(--primaryBlack);
+}
+
+.fileSize {
+  width: 6.25rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .success {
@@ -24,4 +31,10 @@
 .error {
   color: #d9534f;
   font-weight: 600;
+}
+
+@media (max-width: 560px) {
+  .fileName {
+    width: 10rem;
+  }
 }
