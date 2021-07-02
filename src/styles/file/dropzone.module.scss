@@ -6,3 +6,9 @@
   height: 15rem;
   cursor: pointer;
 }
+
+.fileUploadContainer {
+  margin-top: 0.5rem;
+  max-height: 25rem;
+  overflow-y: auto;
+}
