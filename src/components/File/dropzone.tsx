@@ -1,5 +1,6 @@
-import React, { HTMLAttributes, DragEvent, useState } from "react";
+import React, { HTMLAttributes, DragEvent, useState, useEffect } from "react";
 import UploadedFile from "./uploadedFile";
+import { Button } from "@/components/common";
 
 import * as DropzoneStyles from "@/styles/file/dropzone.module.scss";
 
@@ -9,6 +10,7 @@ interface DropzoneProps extends HTMLAttributes<HTMLDivElement> {
   fileTypes?: string[];
   maxSize?: number;
   sizeUnit?: "Bytes" | "KB" | "MB" | "GB" | "TB";
+  showUploadButton?: boolean;
 }
 
 const Dropzone: React.FC<DropzoneProps> = ({
@@ -18,10 +20,24 @@ const Dropzone: React.FC<DropzoneProps> = ({
   fileTypes = ["file/*"],
   maxSize = 1024,
   sizeUnit = "KB",
+  showUploadButton = true,
 }): React.ReactElement => {
   const [selectedFiles, setSelectedFiles] = useState<
     Array<{ file: File; errors: string; id: string }>
   >([]);
+
+  const [unsupportedFile, setUnsupportedFile] = useState<boolean>(false);
+
+  useEffect(() => {
+    let isUnsupportedFilePresent = false;
+    for (const file of selectedFiles) {
+      if (file.errors) {
+        isUnsupportedFilePresent = true;
+        break;
+      }
+    }
+    setUnsupportedFile(isUnsupportedFilePresent);
+  }, [selectedFiles]);
 
   const dragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -180,6 +196,23 @@ const Dropzone: React.FC<DropzoneProps> = ({
           />
         ))}
       </div>
+      {showUploadButton && selectedFiles.length > 0 && (
+        <React.Fragment>
+          {unsupportedFile && (
+            <p style={{ color: "#d9534f" }}>
+              Please remove all unsupported Files.
+            </p>
+          )}
+          <Button
+            text="Upload"
+            variant="fill"
+            type="primary"
+            disabled={unsupportedFile}
+            title={"Upload Images"}
+            style={{ display: "block", margin: "0 auto" }}
+          />
+        </React.Fragment>
+      )}
     </div>
   );
 };
