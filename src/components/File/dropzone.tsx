@@ -11,6 +11,7 @@ interface DropzoneProps extends HTMLAttributes<HTMLDivElement> {
   maxSize?: number;
   sizeUnit?: "Bytes" | "KB" | "MB" | "GB" | "TB";
   showUploadButton?: boolean;
+  handleUpload?: any;
 }
 
 const Dropzone: React.FC<DropzoneProps> = ({
@@ -21,6 +22,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
   maxSize = 1024,
   sizeUnit = "KB",
   showUploadButton = true,
+  handleUpload,
 }): React.ReactElement => {
   const [selectedFiles, setSelectedFiles] = useState<
     Array<{ file: File; errors: string; id: string }>
@@ -210,6 +212,11 @@ const Dropzone: React.FC<DropzoneProps> = ({
             disabled={unsupportedFile}
             title={"Upload Images"}
             style={{ display: "block", margin: "0 auto" }}
+            onClick={e => {
+              handleUpload
+                ? handleUpload(e)
+                : console.log("I will handle upload");
+            }}
           />
         </React.Fragment>
       )}
