@@ -1,0 +1,26 @@
+.demoContainer {
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  background: var(--darkGrey);
+  color: white;
+  margin-top: 1rem;
+}
+
+.descriptionHeading {
+  font-size: 2rem;
+  font-weight: 600;
+  font-family: sans-serif;
+}
+
+.description {
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+  line-height: 1.4;
+
+  code {
+    background: var(--lightGrey);
+  }
+}
