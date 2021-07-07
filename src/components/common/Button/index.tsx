@@ -3,8 +3,6 @@ import React, { HTMLAttributes } from "react";
 import * as ButtonStyles from "@/styles/common/button.module.scss";
 
 interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
-  children?: React.ReactNode;
-  className?: string;
   disabled?: boolean;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   text?: string;
